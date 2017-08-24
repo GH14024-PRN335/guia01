@@ -1,0 +1,30 @@
+﻿version: '2'
+
+services:
+  postgres:
+    restart: always
+    image: postgres-imagen
+    container_name: psqalpine-prn335
+    build: ./postgres/.
+    environment:
+      POSTGRES_USER: mortal2017
+      POSTGRES_PASSWORD: prn335
+      POSTGRES_DB: posts
+    ports:
+      - 5432:5432
+    volumes:
+      - /database: /var/lib/postgresql/data
+
+  payara:
+    image: payara-imagen
+    container_name: payara-prn335
+    ports:
+      - 4848:4848
+      - 8080:8080
+    entrypoint:
+     - /opt/payara41/bin/asadmin
+     - start-domain
+     - -v
+
+volumes:
+     - /database:
